@@ -21,3 +21,5 @@ if __name__ == "__main__":
         print(f"PCI Slot for {specific_bus_bridge}: {pci_slot}")
     else:
         print(f"Unable to retrieve PCI slot information for {specific_bus_bridge}")
+
+sudo lshw -class network -businfo
