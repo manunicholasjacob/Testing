@@ -9,12 +9,20 @@ def read_bridge_control(bus):
     except subprocess.CalledProcessError:
         return None
 
-def read_link_status(bus):
+def read_link_status1(bus):
     try:
         link_status_output = subprocess.check_output(["setpci", "-s", bus, "8a.w"])
         return link_status_output.decode().strip()
     except subprocess.CalledProcessError:
         return None
+
+def read_link_status2(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "a2.w"])
+        return link_status_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
 
 def read_slot_capabilities(bus):
     try:
@@ -59,8 +67,8 @@ if __name__ == "__main__":
 
             # Read current values
             current_bridge_control = read_bridge_control(specific_bus_bridge)
-            current_link_status_bridge = read_link_status(specific_bus_bridge)
-            current_link_status_link = read_link_status(specific_bus_link)
+            current_link_status_bridge = read_link_status2(specific_bus_bridge)
+            current_link_status_link = read_link_status1(specific_bus_link)
             current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
             secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
 
