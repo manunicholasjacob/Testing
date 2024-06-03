@@ -1,0 +1,61 @@
+import subprocess
+import getpass
+import time
+
+def read_bridge_control(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "3e.w"])
+        return bridge_control_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_link_status(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "8a.w"])
+        return link_status_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_slot_capabilities(bus):
+    try:
+        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a8.l"])
+        return slot_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def set_bridge_control(bus, value, password):
+    try:
+        subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
+        print(f"Set Bridge Control for {bus} to {value}")
+    except subprocess.CalledProcessError:
+        print(f"Error setting Bridge Control for {bus}.")
+
+if __name__ == "__main__":
+    specific_bus_bridge = "17:00.0"  # Bridge control bus address
+    specific_bus_link = "18:00.0"   # Link status bus address
+    desired_values = ["0003", "0043"]  # Alternating values
+    num_loops = 5  # Number of loops
+
+    # Get the password once
+    user_password = getpass.getpass("Enter your password (sudo access): ")
+
+    for i in range(num_loops):
+        # Alternate between desired values
+        desired_value = desired_values[i % len(desired_values)]
+
+        # Read current values
+        current_bridge_control = read_bridge_control(specific_bus_bridge)
+        current_link_status = read_link_status(specific_bus_link)
+        current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
+
+        print(f"Loop {i + 1} - Current Bridge Control for {specific_bus_bridge}: {current_bridge_control}")
+        print(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}")
+        print(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}")
+
+        # Set new value
+        set_bridge_control(specific_bus_bridge, desired_value, user_password)
+
+        # Wait for a moment (optional)
+        time.sleep(1)
+
+    print("Loop completed.")
