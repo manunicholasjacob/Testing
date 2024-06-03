@@ -39,23 +39,26 @@ if __name__ == "__main__":
     # Get the password once
     user_password = getpass.getpass("Enter your password (sudo access): ")
 
-    for i in range(num_loops):
-        # Alternate between desired values
-        desired_value = desired_values[i % len(desired_values)]
+    # Open a text file for writing
+    with open("output.txt", "w") as output_file:
+        for i in range(num_loops):
+            # Alternate between desired values
+            desired_value = desired_values[i % len(desired_values)]
 
-        # Read current values
-        current_bridge_control = read_bridge_control(specific_bus_bridge)
-        current_link_status = read_link_status(specific_bus_link)
-        current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
+            # Read current values
+            current_bridge_control = read_bridge_control(specific_bus_bridge)
+            current_link_status = read_link_status(specific_bus_link)
+            current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
 
-        print(f"Loop {i + 1} - Current Bridge Control for {specific_bus_bridge}: {current_bridge_control}")
-        print(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}")
-        print(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}")
+            # Write to the text file
+            output_file.write(f"Loop {i + 1} - Current Bridge Control for {specific_bus_bridge}: {current_bridge_control}\n")
+            output_file.write(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}\n")
+            output_file.write(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}\n")
 
-        # Set new value
-        set_bridge_control(specific_bus_bridge, desired_value, user_password)
+            # Set new value
+            set_bridge_control(specific_bus_bridge, desired_value, user_password)
 
-        # Wait for a moment (optional)
-        time.sleep(1)
+            # Wait for a moment (optional)
+            time.sleep(1)
 
-    print("Loop completed.")
+    print("Loop completed. Output written to output.txt.")
