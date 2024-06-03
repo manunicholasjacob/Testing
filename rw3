@@ -75,8 +75,8 @@ if __name__ == "__main__":
             current_bridge_control = read_bridge_control(specific_bus_bridge)
             current_link_status = read_link_status(specific_bus_link)
             current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
-            current_link_capabilities17 = read_link_capabilities(specific_bus_bridge)
-            current_link_capabilities18 = read_link_capabilities(specific_bus_link)
+            current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
+            current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
             secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
 
             # Write to the text file
