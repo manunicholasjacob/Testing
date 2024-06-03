@@ -1,5 +1,6 @@
 import subprocess
 import getpass
+import time
 
 def read_bridge_control(bus):
     try:
@@ -18,15 +19,20 @@ def set_bridge_control(bus, value, password):
 if __name__ == "__main__":
     specific_bus_1 = "17:00.0"
     desired_value = "0043"
+    num_loops = 5  # Number of loops
 
-    # Read initial value
-    initial_bridge_control_1 = read_bridge_control(specific_bus_1)
-    print(f"Initial Bridge Control for {specific_bus_1}: {initial_bridge_control_1}")
+    # Get the password once
+    user_password = getpass.getpass("Enter your password (sudo access): ")
 
-    # Set new value
-    user_password = "your_sudo_password_here"  # Replace with your actual sudo password
-    set_bridge_control(specific_bus_1, desired_value, user_password)
+    for i in range(num_loops):
+        # Read current value
+        current_bridge_control = read_bridge_control(specific_bus_1)
+        print(f"Loop {i + 1} - Current Bridge Control for {specific_bus_1}: {current_bridge_control}")
 
-    # Read final value
-    final_bridge_control_1 = read_bridge_control(specific_bus_1)
-    print(f"Final Bridge Control for {specific_bus_1}: {final_bridge_control_1}")
+        # Set new value
+        set_bridge_control(specific_bus_1, desired_value, user_password)
+
+        # Wait for a moment (optional)
+        time.sleep(1)
+
+    print("Loop completed.")
