@@ -1,4 +1,12 @@
 import subprocess
+import re
+
+def read_pci_register(bus, register):
+    try:
+        register_output = subprocess.check_output(["setpci", "-s", bus, register])
+        print(f"Value at register {register} for {bus}: {register_output.decode().strip()}")
+    except subprocess.CalledProcessError:
+        print(f"Error reading register {register} for {bus}.")
 
 def read_bridge_control(bus):
     try:
@@ -8,5 +16,12 @@ def read_bridge_control(bus):
         print(f"Error reading Bridge Control for {bus}.")
 
 if __name__ == "__main__":
-    specific_bus = "17:00.0"
-    read_bridge_control(specific_bus)
+    specific_bus_1 = "17:00.0"
+    specific_bus_2 = "18:00.0"
+    desired_register = "0.b"
+
+    read_pci_register(specific_bus_1, desired_register)
+    read_bridge_control(specific_bus_1)
+
+    read_pci_register(specific_bus_2, desired_register)
+    read_bridge_control(specific_bus_2)
