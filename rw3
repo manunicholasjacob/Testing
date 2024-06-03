@@ -25,7 +25,7 @@ def read_slot_capabilities(bus):
 
 def read_link_capabilities(bus):
     try:
-        link_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "9c.l"])
+        link_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "84.l"])
         return link_capabilities_output.decode().strip()
     except subprocess.CalledProcessError:
         return None
