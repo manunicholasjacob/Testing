@@ -23,10 +23,8 @@ if __name__ == "__main__":
     initial_bridge_control_1 = read_bridge_control(specific_bus_1)
     print(f"Initial Bridge Control for {specific_bus_1}: {initial_bridge_control_1}")
 
-    # Get the password once
-    user_password = getpass.getpass("Enter your password (sudo access): ")
-
     # Set new value
+    user_password = "your_sudo_password_here"  # Replace with your actual sudo password
     set_bridge_control(specific_bus_1, desired_value, user_password)
 
     # Read final value
