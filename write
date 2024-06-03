@@ -1,0 +1,15 @@
+import subprocess
+import getpass
+
+def set_bridge_control(bus, value):
+    try:
+        password = getpass.getpass("Enter your password (sudo access): ")
+        subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
+        print(f"Set Bridge Control for {bus} to {value}")
+    except subprocess.CalledProcessError:
+        print(f"Error setting Bridge Control for {bus}.")
+
+if __name__ == "__main__":
+    specific_bus = "17:00.0"
+    desired_value = "0043"
+    set_bridge_control(specific_bus, desired_value)
