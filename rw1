@@ -1,0 +1,48 @@
+import subprocess
+import getpass
+
+def read_bridge_control(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "3e.w"])
+        return bridge_control_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_link_status(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "82.b"])
+        return link_status_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def set_bridge_control(bus, value):
+    try:
+        password = getpass.getpass("Enter your password (sudo access): ")
+        subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
+        print(f"Set Bridge Control for {bus} to {value}")
+    except subprocess.CalledProcessError:
+        print(f"Error setting Bridge Control for {bus}.")
+
+if __name__ == "__main__":
+    specific_bus_1 = "17:00.0"
+    specific_bus_2 = "18:00.0"
+    desired_value = "0043"
+
+    for _ in range(2):
+        # Read initial values
+        initial_bridge_control_1 = read_bridge_control(specific_bus_1)
+        initial_link_status_2 = read_link_status(specific_bus_2)
+
+        print(f"Initial Bridge Control for {specific_bus_1}: {initial_bridge_control_1}")
+        print(f"Initial Link Status for {specific_bus_2}: {initial_link_status_2}")
+
+        # Set new values
+        set_bridge_control(specific_bus_1, desired_value)
+
+        # Read updated values
+        updated_bridge_control_1 = read_bridge_control(specific_bus_1)
+        updated_link_status_2 = read_link_status(specific_bus_2)
+
+        print(f"Updated Bridge Control for {specific_bus_1}: {updated_bridge_control_1}")
+        print(f"Updated Link Status for {specific_bus_2}: {updated_link_status_2}")
+        print("-" * 40)  # Separator for clarity
