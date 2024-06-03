@@ -1,0 +1,20 @@
+# read_bridge_control.py
+import subprocess
+
+def read_bridge_control(bus):
+    try:
+        lspci_output = subprocess.check_output(["lspci", "-s", bus])
+        lines = lspci_output.decode("utf-8").splitlines()
+        for line in lines:
+            if "Bridge Control" in line:
+                _, bridge_control = line.split(":")
+                print(f"Bridge Control for {bus}: {bridge_control.strip()}")
+                break
+        else:
+            print(f"No Bridge Control information found for {bus}.")
+    except subprocess.CalledProcessError:
+        print(f"Error reading device {bus}.")
+
+if __name__ == "__main__":
+    specific_bus = "17:00.0"
+    read_bridge_control(specific_bus)
