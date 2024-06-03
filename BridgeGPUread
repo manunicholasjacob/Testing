@@ -1,0 +1,15 @@
+import subprocess
+
+def read_lspci(bus):
+    try:
+        lspci_output = subprocess.check_output(["lspci", "-s", bus])
+        print(f"Device {bus} information:")
+        print(lspci_output.decode("utf-8"))
+        print("-" * 40)  # Separator for clarity
+    except subprocess.CalledProcessError:
+        print(f"Error reading device {bus}.")
+
+if __name__ == "__main__":
+    specific_buses = ["17:00.0", "18:00.0"]
+    for bus in specific_buses:
+        read_lspci(bus)
