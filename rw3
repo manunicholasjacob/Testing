@@ -9,20 +9,12 @@ def read_bridge_control(bus):
     except subprocess.CalledProcessError:
         return None
 
-def read_link_status1(bus):
+def read_link_status(bus):
     try:
         link_status_output = subprocess.check_output(["setpci", "-s", bus, "8a.w"])
         return link_status_output.decode().strip()
     except subprocess.CalledProcessError:
         return None
-
-def read_link_status2(bus):
-    try:
-        link_status_output = subprocess.check_output(["setpci", "-s", bus, "a2.w"])
-        return link_status_output.decode().strip()
-    except subprocess.CalledProcessError:
-        return None
-
 
 def read_slot_capabilities(bus):
     try:
@@ -67,15 +59,13 @@ if __name__ == "__main__":
 
             # Read current values
             current_bridge_control = read_bridge_control(specific_bus_bridge)
-            current_link_status_bridge = read_link_status2(specific_bus_bridge)
-            current_link_status_link = read_link_status1(specific_bus_link)
+            current_link_status = read_link_status(specific_bus_link)
             current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
             secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
 
             # Write to the text file
             output_file.write(f"Loop {i + 1} - Current Bridge Control for {specific_bus_bridge}: {current_bridge_control}\n")
-            output_file.write(f"Loop {i + 1} - Link Status for {specific_bus_bridge}: {current_link_status_bridge}\n")
-            output_file.write(f"Loop {i +  1} - Link Status for {specific_bus_link}: {current_link_status_link}\n")
+            output_file.write(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}\n")
             output_file.write(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}\n")
             output_file.write(f"Loop {i + 1} - Secondary Bus Number for {specific_bus_bridge}: {format_bdf(secondary_bus_number)}\n")
 
