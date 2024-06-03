@@ -26,13 +26,16 @@ def set_bridge_control(bus, value, password):
 if __name__ == "__main__":
     specific_bus_bridge = "17:00.0"  # Bridge control bus address
     specific_bus_link = "18:00.0"   # Link status bus address
-    desired_value = "0043"
+    desired_values = ["0003", "0043"]  # Alternating values
     num_loops = 5  # Number of loops
 
     # Get the password once
     user_password = getpass.getpass("Enter your password (sudo access): ")
 
     for i in range(num_loops):
+        # Alternate between desired values
+        desired_value = desired_values[i % len(desired_values)]
+
         # Read current values
         current_bridge_control = read_bridge_control(specific_bus_bridge)
         current_link_status = read_link_status(specific_bus_link)
