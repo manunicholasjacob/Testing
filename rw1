@@ -9,6 +9,13 @@ def read_bridge_control(bus):
     except subprocess.CalledProcessError:
         return None
 
+def read_link_status(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "82.b"])
+        return link_status_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
 def set_bridge_control(bus, value, password):
     try:
         subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
@@ -25,9 +32,12 @@ if __name__ == "__main__":
     user_password = getpass.getpass("Enter your password (sudo access): ")
 
     for i in range(num_loops):
-        # Read current value
+        # Read current values
         current_bridge_control = read_bridge_control(specific_bus_1)
+        current_link_status = read_link_status(specific_bus_1)
+
         print(f"Loop {i + 1} - Current Bridge Control for {specific_bus_1}: {current_bridge_control}")
+        print(f"Loop {i + 1} - Link Status for {specific_bus_1}: {current_link_status}")
 
         # Set new value
         set_bridge_control(specific_bus_1, desired_value, user_password)
