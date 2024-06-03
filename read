@@ -1,17 +1,13 @@
 import subprocess
-import re
 
-def read_bridge_control(bus):
+def set_pci_register(bus, register_value):
     try:
-        setpci_output = subprocess.check_output(["setpci", "-s", bus, "0x3e.l"])
-        bridge_control_value = re.search(r"0x([0-9a-fA-F]+)", setpci_output.decode("utf-8"))
-        if bridge_control_value:
-            print(f"Bridge Control for {bus}: 0x{bridge_control_value.group(1)}")
-        else:
-            print(f"No Bridge Control information found for {bus}.")
+        subprocess.run(["setpci", "-s", bus, "3e.w=" + register_value], check=True)
+        print(f"Successfully set 0x3e register for {bus} to {register_value}.")
     except subprocess.CalledProcessError:
-        print(f"Error reading device {bus} using setpci.")
+        print(f"Error setting register for {bus}.")
 
 if __name__ == "__main__":
     specific_bus = "17:00.0"
-    read_bridge_control(specific_bus)
+    desired_value = "1234"  # Replace with the desired value in hexadecimal format
+    set_pci_register(specific_bus, desired_value)
