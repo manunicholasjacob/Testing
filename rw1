@@ -11,7 +11,7 @@ def read_bridge_control(bus):
 
 def read_link_status(bus):
     try:
-        link_status_output = subprocess.check_output(["setpci", "-s", bus, "82.b"])
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "8a.w"])
         return link_status_output.decode().strip()
     except subprocess.CalledProcessError:
         return None
