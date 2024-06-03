@@ -3,16 +3,14 @@ import re
 
 def read_bridge_control(bus):
     try:
-        lspci_output = subprocess.check_output(["lspci", "-s", bus])
-        for line in lspci_output.decode("utf-8").splitlines():
-            if "Bridge Control" in line:
-                bridge_control_value = re.search(r"Bridge Control \(0x3e\) : (.+)", line)
-                if bridge_control_value:
-                    print(f"Bridge Control for {bus}: {bridge_control_value.group(1)}")
-                    return
-        print(f"No Bridge Control information found for {bus}.")
+        setpci_output = subprocess.check_output(["setpci", "-s", bus, "0x3e.l"])
+        bridge_control_value = re.search(r"0x([0-9a-fA-F]+)", setpci_output.decode("utf-8"))
+        if bridge_control_value:
+            print(f"Bridge Control for {bus}: 0x{bridge_control_value.group(1)}")
+        else:
+            print(f"No Bridge Control information found for {bus}.")
     except subprocess.CalledProcessError:
-        print(f"Error reading device {bus}.")
+        print(f"Error reading device {bus} using setpci.")
 
 if __name__ == "__main__":
     specific_bus = "17:00.0"
