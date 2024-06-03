@@ -1,20 +1,12 @@
 import subprocess
-import re
 
-def read_and_set_bridge_control(bus, desired_value):
+def read_bridge_control(bus):
     try:
-        # Read the current Bridge Control value
-        read_output = subprocess.check_output(["setpci", "-s", bus, "3e.w"])
-        current_value = re.search(r"0x([0-9a-fA-F]+)", read_output.decode("utf-8")).group(1)
-        print(f"Current Bridge Control for {bus}: 0x{current_value}")
-
-        # Set the desired value
-        subprocess.run(["setpci", "-s", bus, "3e.w=" + desired_value], check=True)
-        print(f"Set Bridge Control for {bus} to 0x{desired_value}")
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "3e.w"])
+        print(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
     except subprocess.CalledProcessError:
-        print(f"Error reading or setting Bridge Control for {bus}.")
+        print(f"Error reading Bridge Control for {bus}.")
 
 if __name__ == "__main__":
     specific_bus = "17:00.0"
-    desired_value = "1234"  # Replace with the desired value in hexadecimal format
-    read_and_set_bridge_control(specific_bus, desired_value)
+    read_bridge_control(specific_bus)
