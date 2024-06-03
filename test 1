@@ -1,0 +1,12 @@
+# pci_info.py
+import subprocess
+
+def run_lspci():
+    try:
+        lspci_output = subprocess.check_output(["lspci"])
+        print(lspci_output.decode("utf-8"))
+    except subprocess.CalledProcessError:
+        print("Error running lspci command.")
+
+if __name__ == "__main__":
+    run_lspci()
