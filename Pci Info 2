@@ -1,0 +1,13 @@
+# pci_info.py
+import subprocess
+
+def read_specific_device(bus):
+    try:
+        lspci_output = subprocess.check_output(["lspci", "-s", bus])
+        print(lspci_output.decode("utf-8"))
+    except subprocess.CalledProcessError:
+        print(f"Error reading device {bus}.")
+
+if __name__ == "__main__":
+    specific_bus = "18:00.0"
+    read_specific_device(specific_bus)
