@@ -7,16 +7,16 @@ def read_bridge_control(bus):
     except subprocess.CalledProcessError:
         print(f"Error reading Bridge Control for {bus}.")
 
-def read_register_0b(bus):
+def read_link_status(bus):
     try:
-        register_0b_output = subprocess.check_output(["setpci", "-s", bus, "0.b"])
-        print(f"Value at register 0.b for {bus}: {register_0b_output.decode().strip()}")
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "82.b"])
+        print(f"Link Status for {bus}: {link_status_output.decode().strip()}")
     except subprocess.CalledProcessError:
-        print(f"Error reading register 0.b for {bus}.")
+        print(f"Error reading Link Status for {bus}.")
 
 if __name__ == "__main__":
     specific_bus_1 = "17:00.0"
     specific_bus_2 = "18:00.0"
 
     read_bridge_control(specific_bus_1)
-    read_register_0b(specific_bus_2)
+    read_link_status(specific_bus_2)
