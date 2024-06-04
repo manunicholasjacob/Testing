@@ -62,7 +62,7 @@ def convert_hex_to_binary(hex_string):
     decimal_value = int(hex_string, 16)
     
     # Convert integer to binary string
-    binary_string = bin(decimal_value)[2:]  # Remove the '0b' prefix
+    binary_string = bin(decimal_value)[0:]  # Remove the '0b' prefix
     
     return binary_string
 
@@ -71,8 +71,8 @@ def extract_link_capabilities(hex_string):
     binary_string = convert_hex_to_binary(hex_string)
     
     # Extract maximum link width and maximum link speed
-    max_link_width = int(binary_string[0:4], 2)
-    max_link_speed = int(binary_string[4:], 2)
+    max_link_width = int(binary_string[24:27], 2)
+    max_link_speed = int(binary_string[17:23], 2)
     
     return max_link_width, max_link_speed
 
@@ -116,8 +116,10 @@ if __name__ == "__main__":
             output_file.write(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_bridge}: {current_link_capabilities17}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_link}: {current_link_capabilities18}\n")
-            output_file.write(f"Loop {i + 1} - max width and max speed for {specific_bus_bridge}: {max_width17, max_speed17}\n")
-            output_file.write(f"Loop {i + 1} - max width and max speed for {specific_bus_link}: {max_width18, max_speed18}\n")
+            output_file.write(f"Loop {i + 1} - max width for {specific_bus_bridge}: {max_width17, max_speed17}\n")
+            output_file.write(f"Loop {i + 1} - max speed for {specific_bus_bridge}: {max_width17, max_speed17}\n")
+            output_file.write(f"Loop {i + 1} - max width for {specific_bus_link}: {max_width18, max_speed18}\n")
+            output_file.write(f"Loop {i + 1} - max speed for {specific_bus_link}: {max_width18, max_speed18}\n")
             output_file.write(f"Loop {i + 1} - Secondary Bus Number for {specific_bus_bridge}: {format_bdf(secondary_bus_number)}\n")
 
             # Set new value
