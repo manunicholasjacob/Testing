@@ -3,7 +3,7 @@ import subprocess
 def read_header(bus):
     try:
         bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "0e.w"])
-        return(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
+        return(f" : {bridge_control_output.decode().strip()}")
     except subprocess.CalledProcessError:
         return(f"Error reading Bridge Control for {bus}.")
 
