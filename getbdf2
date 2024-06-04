@@ -1,5 +1,13 @@
 import subprocess
 
+def read_header(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "0e.w"])
+        print(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
+    except subprocess.CalledProcessError:
+        print(f"Error reading Bridge Control for {bus}.")
+
+
 def execute_shell_command(command):
     try:
         # Execute the shell command
@@ -24,3 +32,7 @@ split_numbers = [num for num in split_numbers if num]
 
 # Print the resulting list
 print(split_numbers)
+
+if __name__ == "__main__":
+    for i in range(len(split_numbers)):
+        read_header(split_numbers[i]
