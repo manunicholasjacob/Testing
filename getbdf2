@@ -35,4 +35,5 @@ split_numbers = [num for num in split_numbers if num]
 
 for i in range(len(split_numbers)):
     header = read_header(split_numbers[i])
-    print(split_numbers[i],header)
+    if header[-1:] ==0:
+        print(split_numbers[i],header)
