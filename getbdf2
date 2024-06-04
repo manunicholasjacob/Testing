@@ -16,7 +16,7 @@ def execute_shell_command(command):
             # Successful execution
             return result.stdout.decode("utf-8").strip()  # Decode bytes to string
         else:
-            # Error occurred
+            # Error occurredhttps://github.com/manunicholasjacob/Testing/blob/main/getbdf2
             return f"Error: {result.stderr.decode('utf-8').strip()}"  # Decode bytes to string
     except Exception as e:
         return f"Error: {str(e)}"
@@ -33,6 +33,5 @@ split_numbers = [num for num in split_numbers if num]
 # Print the resulting list
 print(split_numbers)
 
-if __name__ == "__main__":
-    for i in range(len(split_numbers)):
-        read_header(split_numbers[i]
+for i in range(len(split_numbers)):
+    read_header(split_numbers[i]
