@@ -88,7 +88,7 @@ if __name__ == "__main__":
               output_file.write(f"Loop {i + 1} - Max width Generation of {specific_bus_bridge,specific_bus_link} are same: {max_width17, max_width18}\n")
             else:
               output_file.write(f"Loop {i + 1} - Max width Generation of {specific_bus_bridge,specific_bus_link} are different: {max_width17, max_width18}\n")
-            output_file.write(f"Loop {i + 1} - Max speed of {specific_bus_bridge,specific_bus_link} are: {max_speed17, max_speed18}\n")
+            output_file.write(f"Loop {i + 1} - Max speed of {specific_bus_bridge,specific_bus_link} are: {max_speed17, max_speed18}\n\n")
 
 
             # Set new value
