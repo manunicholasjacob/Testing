@@ -76,7 +76,7 @@ if __name__ == "__main__":
             output_file.write(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_bridge}: {current_link_capabilities17}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_link}: {current_link_capabilities18}\n")
-            if max_width17 = max_width18:
+            if max_width17 == max_width18:
               output_file.write(f"Loop {i + 1} - Max width Generation of {specific_bus_bridge,specific_bus_link} are same: {max_width17, max_width18}\n")
             else:
               output_file.write(f"Loop {i + 1} - Max width Generation of {specific_bus_bridge,specific_bus_link} are different: {max_width17, max_width18}\n")
