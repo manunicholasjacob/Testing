@@ -44,7 +44,8 @@ for i in range(len(split_numbers)):
     if header[-1] =='1':
         print(split_numbers[i],header)
         print(read_slot_capabilities(split_numbers[i]))
-        binary_number = bin(int(read_slot_capabilities(split_numbers[i]), 16))[2:]
+        hex_number = int(read_slot_capabilities(split_numbers[i]), 16)
+        binary_number = bin(hex_number)
         # Extract the relevant bits (from index 31 to 19)
         relevant_bits = binary_number[19:32]
 
