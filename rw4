@@ -116,10 +116,8 @@ if __name__ == "__main__":
             output_file.write(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_bridge}: {current_link_capabilities17}\n")
             output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_link}: {current_link_capabilities18}\n")
-            output_file.write(f"Loop {i + 1} - max width for {specific_bus_bridge}: {max_width17, max_speed17}\n")
-            output_file.write(f"Loop {i + 1} - max speed for {specific_bus_bridge}: {max_width17, max_speed17}\n")
-            output_file.write(f"Loop {i + 1} - max width for {specific_bus_link}: {max_width18, max_speed18}\n")
-            output_file.write(f"Loop {i + 1} - max speed for {specific_bus_link}: {max_width18, max_speed18}\n")
+            output_file.write(f"Loop {i + 1} - Max width Generation and Max speed for {specific_bus_bridge}: {max_width17, max_speed17}\n")
+            output_file.write(f"Loop {i + 1} - Max width Generation and Max speed {specific_bus_link}: {max_width18, max_speed18}\n")
             output_file.write(f"Loop {i + 1} - Secondary Bus Number for {specific_bus_bridge}: {format_bdf(secondary_bus_number)}\n")
 
             # Set new value
