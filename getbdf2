@@ -34,4 +34,4 @@ split_numbers = [num for num in split_numbers if num]
 print(split_numbers)
 
 for i in range(len(split_numbers)):
-    read_header(split_numbers[i]
+    read_header(split_numbers[i])
