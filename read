@@ -34,5 +34,5 @@ if __name__ == "__main__":
     # Convert the list to the desired format
     converted_list = convert_list_to_time_format(original_list)
 
-    for i in range(len(list):
+    for i in range(len(list)):
         read_bridge_control(converted_list(i))
