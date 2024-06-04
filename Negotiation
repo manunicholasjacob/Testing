@@ -51,8 +51,8 @@ def extract_link_capabilities(hex_string):
 
 
 if __name__ == "__main__":
-    specific_bus_bridge = "17:00.0"  # Bridge control bus address
-    specific_bus_link = "18:00.0"   # Link status bus address
+    specific_bus_bridge =  input("Enter info 1") #"17:00.0"  # Bridge control bus address
+    specific_bus_link = input("Enter info 2") #"18:00.0"   # Link status bus address
     desired_values = ["0003", "0043"]  # Alternating values
     num_loops = 25  # Number of loops
 
