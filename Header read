@@ -1,0 +1,22 @@
+import subprocess
+
+def read_bridge_control(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "0e.w"])
+        print(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
+    except subprocess.CalledProcessError:
+        print(f"Error reading Bridge Control for {bus}.")
+
+def read_link_status(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "0e.b"])
+        print(f"Link Status for {bus}: {link_status_output.decode().strip()}")
+    except subprocess.CalledProcessError:
+        print(f"Error reading Link Status for {bus}.")
+
+if __name__ == "__main__":
+    specific_bus_1 = "17:00.0"
+    specific_bus_2 = "18:00.0"
+
+    read_bridge_control(specific_bus_1)
+    read_link_status(specific_bus_2)
