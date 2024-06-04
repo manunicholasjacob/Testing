@@ -7,6 +7,12 @@ def read_header(bus):
     except subprocess.CalledProcessError:
         return(f"Error reading Bridge Control for {bus}.")
 
+def read_slot_capabilities(bus):
+    try:
+        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a8.l"])
+        return slot_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
 
 def execute_shell_command(command):
     try:
@@ -37,5 +43,6 @@ for i in range(len(split_numbers)):
     header = read_header(split_numbers[i])
     if header[-1] =='1':
         print(split_numbers[i],header)
+        current_slot_capabilities = read_slot_capabilities(split_numbers[i])
     else:
         pass
