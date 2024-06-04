@@ -3,9 +3,9 @@ import subprocess
 def read_header(bus):
     try:
         bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "0e.w"])
-        print(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
+        return(f"Bridge Control for {bus}: {bridge_control_output.decode().strip()}")
     except subprocess.CalledProcessError:
-        print(f"Error reading Bridge Control for {bus}.")
+        return(f"Error reading Bridge Control for {bus}.")
 
 
 def execute_shell_command(command):
@@ -25,13 +25,14 @@ def execute_shell_command(command):
 command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
 
 # Print the output
-print(command_output)
+#print(command_output)
 
 split_numbers = command_output.split('\n')
 split_numbers = [num for num in split_numbers if num]
 
 # Print the resulting list
-print(split_numbers)
+#print(split_numbers)
 
 for i in range(len(split_numbers)):
-    read_header(split_numbers[i])
+    header = read_header(split_numbers[i])
+    print(split_numbers[i],header)
