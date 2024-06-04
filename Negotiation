@@ -30,6 +30,14 @@ def read_link_capabilities18(bus):
     except subprocess.CalledProcessError:
         return None
 
+def set_bridge_control(bus, value, password):
+    try:
+        subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
+        print(f"Set Bridge Control for {bus} to {value}")
+    except subprocess.CalledProcessError:
+        print(f"Error setting Bridge Control for {bus}.")
+
+
 def convert_hex_to_binary(hex_string):
     # Convert hexadecimal string to integer
     decimal_value = int(hex_string, 16)
