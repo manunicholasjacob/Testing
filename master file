@@ -168,6 +168,8 @@ def extract_link_capabilities(hex_string):
 
 if __name__ == "__main__":
     
+    user_password = getpass.getpass("Enter your password (sudo access): ")
+    
     for i in range(len(listbdf)):
         
         specific_bus_bridge = listbdf[i] # Bridge control bus address
@@ -176,7 +178,7 @@ if __name__ == "__main__":
         num_loops = 25  # Number of loops
 
         # Get the password once
-        user_password = getpass.getpass("Enter your password (sudo access): ")
+        
 
         # Open a text file for writing
         with open("output.txt", "w") as output_file:
