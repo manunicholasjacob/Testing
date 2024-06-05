@@ -46,7 +46,7 @@ split_numbers = [num for num in split_numbers if num]
 listbdf = []
 for i in range(len(split_numbers)):
     header = read_header(split_numbers[i])
-    if header[-1] =='1'&^ :
+    if header[-1] =='1':
         
 
         a = read_slot_capabilities(split_numbers[i])
