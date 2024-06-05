@@ -75,7 +75,7 @@ for i in range(leb(listbdf)):
     a = int(downstream[0:2])
     b = str(a+1)
     c = b + ":00.0"
-    listbdfdown.appened(c)
+    listbdfdown.append(c)
 
 print(listbdfdown)
 
