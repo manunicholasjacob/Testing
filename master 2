@@ -227,8 +227,8 @@ if __name__ == "__main__":
                 # Wait for a moment (optional)
                 time.sleep(0.3)
 
-        print(Exp_Upstream_gen)
-        print(Exp_Upstream_speed)
-        print(Exp_Downstream_gen)
-        print(Exp_Downstream_speed)
-        print("Loop completed. Output written to output.txt.")
+    print(Exp_Upstream_gen)
+    print(Exp_Upstream_speed)
+    print(Exp_Downstream_gen)
+    print(Exp_Downstream_speed)
+    print("Loop completed. Output written to output.txt.")
