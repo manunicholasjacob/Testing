@@ -221,7 +221,7 @@ if __name__ == "__main__":
             else:
                 print("speed difference")
             
-        set_bridge_control(specific_bus_bridge, desired_value, user_password)
+            set_bridge_control(specific_bus_bridge, desired_value, user_password)
 
                 # Wait for a moment (optional)
         time.sleep(0.3)
