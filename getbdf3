@@ -46,9 +46,8 @@ split_numbers = [num for num in split_numbers if num]
 
 for i in range(len(split_numbers)):
     header = read_header(split_numbers[i])
-    if header[-1] =='1':
-        print(split_numbers[i],header)
-        print(read_slot_capabilities(split_numbers[i]))
+    if header[-1] =='1'&^ :
+        
 
         a = read_slot_capabilities(split_numbers[i])
 
@@ -57,7 +56,11 @@ for i in range(len(split_numbers)):
         c = b[0,13]
 
         d = int(c,2)
-
-        print(f"Slot number: {d}")
+        if d >0:
+            print(split_numbers[i],header)
+            print(read_slot_capabilities(split_numbers[i]))
+            print(f"Slot number: {d}")
+        else:
+            pass
     else:
         pass
