@@ -52,7 +52,7 @@ for i in range(len(split_numbers)):
 
         a = read_slot_capabilities(split_numbers[i])
 
-        hex_to_binary(
+        b = hex_to_binary(a)
 
         print(f"Slot number: {extracted_integer}")
     else:
