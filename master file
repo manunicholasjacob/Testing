@@ -1,6 +1,4 @@
 import subprocess
-import getpass
-import time
 
 def read_header(bus):
     try:
@@ -24,7 +22,7 @@ def execute_shell_command(command):
             # Successful execution
             return result.stdout.decode("utf-8").strip()  # Decode bytes to string
         else:
-            # Error occurred
+            # Error occurredhttps://github.com/manunicholasjacob/Testing/blob/main/getbdf2
             return f"Error: {result.stderr.decode('utf-8').strip()}"  # Decode bytes to string
     except Exception as e:
         return f"Error: {str(e)}"
@@ -33,6 +31,52 @@ def hex_to_binary(hex_string):
     # Convert hexadecimal string to binary (with leading zeros)
     binary_string = format(int(hex_string, 16), '032b')
     return binary_string
+
+# Execute the given shell command
+command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
+
+# Print the output
+#print(command_output)
+
+split_numbers = command_output.split('\n')
+split_numbers = [num for num in split_numbers if num]
+
+# Print the resulting list
+#print(split_numbers)
+listbdf = []
+for i in range(len(split_numbers)):
+    header = read_header(split_numbers[i])
+    if header[-1] =='1'&^ :
+        
+
+        a = read_slot_capabilities(split_numbers[i])
+
+        b = hex_to_binary(a)
+
+        c = b[0,13]
+
+        d = int(c,2)
+        if d >0:
+            print(split_numbers[i],header)
+            print(read_slot_capabilities(split_numbers[i]))
+            print(f"Slot number: {d}")
+            listbdf.append(split_numbers[i])
+        else:
+            pass
+    else:
+        pass
+
+print(listbdf)
+#downstream = 
+#a = int(downstream[0:2])
+#print(a+1)
+#b = str(a+1)
+#c = b + ":00.0"
+#print(c)
+
+import subprocess
+import getpass
+import time
 
 def read_bridge_control(bus):
     try:
@@ -108,35 +152,14 @@ def extract_link_capabilities(hex_string):
     
     return max_link_width, max_link_speed
 
-# Execute the given shell command
-command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
+# Example usage
+#hex_link_capabilities = "0x1A"  # Replace with your actual hexadecimal link capabilities
+#max_width17, max_speed17 = extract_link_capabilities(hex_link_capabilities)
 
-# Print the output
-#print(command_output)
+#print(f"Maximum Link Width: {max_width}")
+#print(f"Maximum Link Speed: {max_speed}")
 
-split_numbers = command_output.split('\n')
-split_numbers = [num for num in split_numbers if num]
 
-# Print the resulting list
-#print(split_numbers)
-
-for i in range(len(split_numbers)):
-    header = read_header(split_numbers[i])
-    if header[-1] =='1':
-        print(split_numbers[i],header)
-        print(read_slot_capabilities(split_numbers[i]))
-
-        a = read_slot_capabilities(split_numbers[i])
-
-        b = hex_to_binary(a)
-
-        c = b[0:13]
-
-        d = int(c,2)
-
-        print(f"Slot number: {d}")
-    else:
-        pass
 
 if __name__ == "__main__":
     specific_bus_bridge = "17:00.0"  # Bridge control bus address
