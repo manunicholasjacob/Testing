@@ -54,6 +54,10 @@ for i in range(len(split_numbers)):
 
         b = hex_to_binary(a)
 
-        print(f"Slot number: {extracted_integer}")
+        c = b[0,13]
+
+        d = int(c,2)
+
+        print(f"Slot number: {d}")
     else:
         pass
