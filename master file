@@ -1,0 +1,182 @@
+import subprocess
+import getpass
+import time
+
+def read_header(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "0e.w"])
+        return(f" : {bridge_control_output.decode().strip()}")
+    except subprocess.CalledProcessError:
+        return(f"Error reading Bridge Control for {bus}.")
+
+def read_slot_capabilities(bus):
+    try:
+        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a4.l"])
+        return slot_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def execute_shell_command(command):
+    try:
+        # Execute the shell command
+        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode == 0:
+            # Successful execution
+            return result.stdout.decode("utf-8").strip()  # Decode bytes to string
+        else:
+            # Error occurred
+            return f"Error: {result.stderr.decode('utf-8').strip()}"  # Decode bytes to string
+    except Exception as e:
+        return f"Error: {str(e)}"
+
+def hex_to_binary(hex_string):
+    # Convert hexadecimal string to binary (with leading zeros)
+    binary_string = format(int(hex_string, 16), '032b')
+    return binary_string
+
+def read_bridge_control(bus):
+    try:
+        bridge_control_output = subprocess.check_output(["setpci", "-s", bus, "3e.w"])
+        return bridge_control_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_link_status(bus):
+    try:
+        link_status_output = subprocess.check_output(["setpci", "-s", bus, "8a.w"])
+        return link_status_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_slot_capabilities(bus):
+    try:
+        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a8.l"])
+        return slot_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_link_capabilities17(bus):
+    try:
+        link_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "9c.l"])
+        return link_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_link_capabilities18(bus):
+    try:
+        link_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "84.l"])
+        return link_capabilities_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def read_secondary_bus_number(bus):
+    try:
+        secondary_bus_output = subprocess.check_output(["setpci", "-s", bus, "19.b"])
+        return secondary_bus_output.decode().strip()
+    except subprocess.CalledProcessError:
+        return None
+
+def set_bridge_control(bus, value, password):
+    try:
+        subprocess.run(["sudo", "-S", "setpci", "-s", bus, "3e.w=" + value], input=password.encode(), check=True)
+        print(f"Set Bridge Control for {bus} to {value}")
+    except subprocess.CalledProcessError:
+        print(f"Error setting Bridge Control for {bus}.")
+
+def format_bdf(bus):
+    # Extract bus number
+    bus_number = bus.split(":")[0]
+    return f"{bus_number}:0.0"
+
+
+def convert_hex_to_binary(hex_string):
+    # Convert hexadecimal string to integer
+    decimal_value = int(hex_string, 16)
+    
+    # Convert integer to binary string
+    binary_string = bin(decimal_value)[0:]  # Remove the '0b' prefix
+    
+    return binary_string
+
+def extract_link_capabilities(hex_string):
+    # Convert hexadecimal string to binary
+    binary_string = convert_hex_to_binary(hex_string)
+    
+    # Extract maximum link width and maximum link speed
+    max_link_width = int(binary_string[len(binary_string)-3:len(binary_string)], 2)
+    max_link_speed = int(binary_string[len(binary_string)-9:len(binary_string)-4], 2)
+    
+    return max_link_width, max_link_speed
+
+# Execute the given shell command
+command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
+
+# Print the output
+#print(command_output)
+
+split_numbers = command_output.split('\n')
+split_numbers = [num for num in split_numbers if num]
+
+# Print the resulting list
+#print(split_numbers)
+
+for i in range(len(split_numbers)):
+    header = read_header(split_numbers[i])
+    if header[-1] =='1':
+        print(split_numbers[i],header)
+        print(read_slot_capabilities(split_numbers[i]))
+
+        a = read_slot_capabilities(split_numbers[i])
+
+        b = hex_to_binary(a)
+
+        c = b[0,13]
+
+        d = int(c,2)
+
+        print(f"Slot number: {d}")
+    else:
+        pass
+
+if __name__ == "__main__":
+    specific_bus_bridge = "17:00.0"  # Bridge control bus address
+    specific_bus_link = "18:00.0"   # Link status bus address
+    desired_values = ["0003", "0043"]  # Alternating values
+    num_loops = 25  # Number of loops
+
+    # Get the password once
+    user_password = getpass.getpass("Enter your password (sudo access): ")
+
+    # Open a text file for writing
+    with open("output.txt", "w") as output_file:
+        for i in range(num_loops):
+            # Alternate between desired values
+            desired_value = desired_values[i % len(desired_values)]
+
+            # Read current values
+            current_bridge_control = read_bridge_control(specific_bus_bridge)
+            current_link_status = read_link_status(specific_bus_link)
+            current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
+            current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
+            current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
+            secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
+            max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
+            max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
+
+            # Write to the text file
+            output_file.write(f"Loop {i + 1} - Current Bridge Control for {specific_bus_bridge}: {current_bridge_control}\n")
+            output_file.write(f"Loop {i + 1} - Link Status for {specific_bus_link}: {current_link_status}\n")
+            output_file.write(f"Loop {i + 1} - Slot Capabilities for {specific_bus_bridge}: {current_slot_capabilities}\n")
+            output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_bridge}: {current_link_capabilities17}\n")
+            output_file.write(f"Loop {i + 1} - Link Capabilities for {specific_bus_link}: {current_link_capabilities18}\n")
+            output_file.write(f"Loop {i + 1} - Max width Generation and Max speed for {specific_bus_bridge}: {max_width17, max_speed17}\n")
+            output_file.write(f"Loop {i + 1} - Max width Generation and Max speed {specific_bus_link}: {max_width18, max_speed18}\n")
+            output_file.write(f"Loop {i + 1} - Secondary Bus Number for {specific_bus_bridge}: {format_bdf(secondary_bus_number)}\n")
+
+            # Set new value
+            set_bridge_control(specific_bus_bridge, desired_value, user_password)
+
+            # Wait for a moment (optional)
+            time.sleep(0.3)
+
+    print("Loop completed. Output written to output.txt.")
