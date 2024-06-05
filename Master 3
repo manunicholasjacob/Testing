@@ -211,10 +211,10 @@ if __name__ == "__main__":
             max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
             max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
             
-            set_bridge_control(specific_bus_bridge, desired_value, user_password)
+        set_bridge_control(specific_bus_bridge, desired_value, user_password)
 
                 # Wait for a moment (optional)
-            time.sleep(0.3)
+        time.sleep(0.3)
             
         
 
