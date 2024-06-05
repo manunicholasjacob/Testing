@@ -47,7 +47,7 @@ for i in range(len(split_numbers)):
         hex_number = int(read_slot_capabilities(split_numbers[i]), 16)
         binary_number = bin(hex_number)
         # Extract the relevant bits (from index 31 to 19)
-        relevant_bits = binary_number[19:32]
+        relevant_bits = binary_number[2:31]
 
         # Convert the relevant bits to decimal
         decimal_result = int(relevant_bits, 2)
