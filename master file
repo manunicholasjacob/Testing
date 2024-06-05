@@ -130,7 +130,7 @@ for i in range(len(split_numbers)):
 
         b = hex_to_binary(a)
 
-        c = b[0,13]
+        c = b[0:13]
 
         d = int(c,2)
 
