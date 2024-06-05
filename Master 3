@@ -193,29 +193,29 @@ if __name__ == "__main__":
 
     num_loops = 25  # Number of loops
 
-    #for i in range(num_loops):
+    for i in range(num_loops):
     
-    for i in range(len(listbdf)):
+        for j in range(len(listbdf)):
 
-        specific_bus_bridge = listbdf[i] # Bridge control bus address
-        specific_bus_link = listbdfdown[i]   # Link status bus address
-        desired_values = ["0003", "0043"]  # Alternating values   
+            specific_bus_bridge = listbdf[j] # Bridge control bus address
+            specific_bus_link = listbdfdown[j]   # Link status bus address
+            desired_values = ["0003", "0043"]  # Alternating values   
 
-        desired_value = desired_values[i % len(desired_values)]
-        current_bridge_control = read_bridge_control(specific_bus_bridge)
-        current_link_status = read_link_status(specific_bus_link)
-        current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
-        current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
-        current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
-        secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
-        max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
-        max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
-        
-        set_bridge_control(specific_bus_bridge, desired_value, user_password)
+            desired_value = desired_values[i % len(desired_values)]
+            current_bridge_control = read_bridge_control(specific_bus_bridge)
+            current_link_status = read_link_status(specific_bus_link)
+            current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
+            current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
+            current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
+            secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
+            max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
+            max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
+            
+            set_bridge_control(specific_bus_bridge, desired_value, user_password)
 
-            # Wait for a moment (optional)
-        time.sleep(0.3)
-        
+                # Wait for a moment (optional)
+            time.sleep(0.3)
+            
         
 
 
