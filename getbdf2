@@ -9,7 +9,7 @@ def read_header(bus):
 
 def read_slot_capabilities(bus):
     try:
-        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a8.l"])
+        slot_capabilities_output = subprocess.check_output(["setpci", "-s", bus, "a4.l"])
         return slot_capabilities_output.decode().strip()
     except subprocess.CalledProcessError:
         return None
@@ -45,6 +45,7 @@ for i in range(len(split_numbers)):
         print(split_numbers[i],header)
         print(read_slot_capabilities(split_numbers[i]))
         hex_number = int(read_slot_capabilities(split_numbers[i]), 16)
+        
         binary_number = bin(hex_number)
         # Extract the relevant bits (from index 31 to 19)
         relevant_bits = binary_number[2:31]
