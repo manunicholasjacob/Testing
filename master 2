@@ -169,16 +169,27 @@ def extract_link_capabilities(hex_string):
 if __name__ == "__main__":
     
     user_password = getpass.getpass("Enter your password (sudo access): ")
-    
+
+    Exp_Upstream_gen = []
+    Exp_Upstream_speed = []
+    Exp_Downstream_gen = []
+    Exp_Downstream_speed = []
+
+
     for i in range(len(listbdf)):
         
         specific_bus_bridge = listbdf[i] # Bridge control bus address
         specific_bus_link = listbdfdown[i]   # Link status bus address
         desired_values = ["0003", "0043"]  # Alternating values
         num_loops = 25  # Number of loops
-        
-        Exp_Upstream_gen = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))[0]
-        print(Exp_Upstream_gen)
+
+        max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
+        max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
+
+        Exp_Upstream_gen.append(max_width17)
+        Exp_Upstream_speed.append(max_speed17)
+        Exp_Downstream_gen.append(max_width18)
+        Exp_Downstream_speed.append(max_speed18)
 
         # Get the password once
         
@@ -216,4 +227,8 @@ if __name__ == "__main__":
                 # Wait for a moment (optional)
                 time.sleep(0.3)
 
-    print("Loop completed. Output written to output.txt.")
+        print(Exp_Upstream_gen)
+        print(Exp_Upstream_speed)
+        print(Exp_Downstream_gen)
+        print(Exp_Downstream_speed)
+        print("Loop completed. Output written to output.txt.")
