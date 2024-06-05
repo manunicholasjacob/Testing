@@ -67,12 +67,17 @@ for i in range(len(split_numbers)):
         pass
 
 print(listbdf)
-#downstream = 
-#a = int(downstream[0:2])
-#print(a+1)
-#b = str(a+1)
-#c = b + ":00.0"
-#print(c)
+
+listbdfdown = []
+
+for i in range(leb(listbdf)):
+    dowstream = listbdf[i]
+    a = int(downstream[0:2])
+    b = str(a+1)
+    c = b + ":00.0"
+    listbdfdown.appened(c)
+
+print(listbdfdown)
 
 import subprocess
 import getpass
