@@ -72,8 +72,8 @@ listbdfdown = []
 
 for i in range(leb(listbdf)):
     dowstream = listbdf[i]
-    a = int(downstream[0:2])
-    b = str(a+1)
+    a = int(downstream[0:2],16)
+    b = str(hex(a+1)[2:4])
     c = b + ":00.0"
     listbdfdown.append(c)
 
