@@ -27,6 +27,11 @@ def execute_shell_command(command):
     except Exception as e:
         return f"Error: {str(e)}"
 
+def hex_to_binary(hex_string):
+    # Convert hexadecimal string to binary (with leading zeros)
+    binary_string = format(int(hex_string, 16), '032b')
+    return binary_string
+
 # Execute the given shell command
 command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
 
@@ -44,16 +49,10 @@ for i in range(len(split_numbers)):
     if header[-1] =='1':
         print(split_numbers[i],header)
         print(read_slot_capabilities(split_numbers[i]))
-        hex_number = int(read_slot_capabilities(split_numbers[i]), 16)
 
-        binary_string = bin(hex_number)[2:]  # Remove the '0b' prefix
-    
-        # Extract bits from indent 31 to 19
-        extracted_bits = binary_string[13:32]  # 31:19 (counting from left to right)
-    
-        # Convert the extracted binary substring back to an integer
-        extracted_integer = int(extracted_bits, 2)
+        a = read_slot_capabilities(split_numbers[i])
 
+        hex_to_binary(
 
         print(f"Slot number: {extracted_integer}")
     else:
