@@ -178,13 +178,13 @@ if __name__ == "__main__":
     Exp_Downstream_gen = []
     Exp_Downstream_speed = []
 
-    num_loops = int(input("Number of Loops: "))  # Number of loops
+    inputnum_loops = int(input("Number of Loops: "))  # Number of loops
+    num_loops = 2*inputnum_loops
     
     for i in range(len(listbdf)):
         
         specific_bus_bridge = listbdf[i] # Bridge control bus address
         specific_bus_link = listbdfdown[i]   # Link status bus address
-        desired_values = ["0003", "0043"]  # Alternating values
 
 
         max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
@@ -218,12 +218,12 @@ if __name__ == "__main__":
             
             
             set_bridge_control(specific_bus_bridge, desired_value, user_password)
-            if max_width18 == Exp_Upstream_gen[j] or Exp_Downstream_gen[j]:
+            if max_width18 == Exp_Upstream_gen[i] or Exp_Downstream_gen[i]:
                 pass
             else:
                 print("width difference")
 
-            if max_speed18 == Exp_Upstream_speed[j] or Exp_Downstream_speed[j]:
+            if max_speed18 == Exp_Upstream_speed[i] or Exp_Downstream_speed:
                 pass
             else:
                 print("speed difference")
