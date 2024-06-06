@@ -232,6 +232,7 @@ if __name__ == "__main__":
                 else:
                     print("width difference")
                     if kill =="y":
+                        print("error")
                         break
                     else:
                         pass
@@ -241,6 +242,7 @@ if __name__ == "__main__":
                 else:
                     print("speed difference")
                     if kill =="y":
+                        print("error")
                         break
                     else:
                         pass
