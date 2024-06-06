@@ -258,12 +258,12 @@ if __name__ == "__main__":
         print("choose slotnumbers among following",slotnumbers)
         slotlist =[]
         indexlist=[]
-        choose_slot = input("enter slots you want to test: ")
+        choose_slot = int(input("enter slots you want to test: "))
         slotlist.append(choose_slot)
         newbdflist=[]
         choose_more_slots = input("Do you want to choose more slots (y/n): ")
         while choose_more_slots =="y":
-            choose_slot = input("enter slots you want to test: ")
+            choose_slot = int(input("enter slots you want to test: "))
             slotlist.append(choose_slot)
             choose_more_slots = input("Do you want to choose more slots (y/n): ")
         
@@ -275,59 +275,59 @@ if __name__ == "__main__":
             
             
             
-    for i in range(num_loops):
-    
-        for j in range(len(indexlist)):
-
-            specific_bus_bridge = listbdf[indexlist[j]] # Bridge control bus address
-            specific_bus_link = listbdfdown[indexlist[j]]   # Link status bus address
-            desired_values = [bridge_control_values[indexlist[j]], "0043"]  # Alternating values   
-
-            desired_value = desired_values[i % len(desired_values)]
-            current_bridge_control = read_bridge_control(specific_bus_bridge)
-            current_link_status = read_link_status(specific_bus_link)
-            current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
-            current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
-            current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
-            secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
-            max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
-            max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
-
-            
-            
-            set_bridge_control(specific_bus_bridge, desired_value, user_password)
-            
-        if i%2 ==0:
-            
-            if max_width18 == Exp_Upstream_gen[indexlist[j]] or Exp_Downstream_gen[indexlist[j]]:
-                pass
-            else:
-                print("width difference")
-                if kill =="y":
-                    break
-                else:
-                    pass
-
-            if max_speed18 == Exp_Upstream_speed[indexlist[j]] or Exp_Downstream_speed[indexlist[j]]:
-                pass
-            else:
-                print("speed difference")
-                if kill =="y":
-                    break
-                else:
-                    pass
-                
-        else:
-            pass
-            
-                # Wait for a moment 
-        time.sleep(0.3)            
-
-
-
-
+        for i in range(num_loops):
         
-        print("Implementation to be completed")
+            for j in range(len(indexlist)):
+
+                specific_bus_bridge = listbdf[indexlist[j]] # Bridge control bus address
+                specific_bus_link = listbdfdown[indexlist[j]]   # Link status bus address
+                desired_values = [bridge_control_values[indexlist[j]], "0043"]  # Alternating values   
+
+                desired_value = desired_values[i % len(desired_values)]
+                current_bridge_control = read_bridge_control(specific_bus_bridge)
+                current_link_status = read_link_status(specific_bus_link)
+                current_slot_capabilities = read_slot_capabilities(specific_bus_bridge)
+                current_link_capabilities17 = read_link_capabilities17(specific_bus_bridge)
+                current_link_capabilities18 = read_link_capabilities18(specific_bus_link)
+                secondary_bus_number = read_secondary_bus_number(specific_bus_bridge)
+                max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
+                max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
+
+                
+                
+                set_bridge_control(specific_bus_bridge, desired_value, user_password)
+                
+            if i%2 ==0:
+                
+                if max_width18 == Exp_Upstream_gen[indexlist[j]] or Exp_Downstream_gen[indexlist[j]]:
+                    pass
+                else:
+                    print("width difference")
+                    if kill =="y":
+                        break
+                    else:
+                        pass
+
+                if max_speed18 == Exp_Upstream_speed[indexlist[j]] or Exp_Downstream_speed[indexlist[j]]:
+                    pass
+                else:
+                    print("speed difference")
+                    if kill =="y":
+                        break
+                    else:
+                        pass
+                    
+            else:
+                pass
+                
+                    # Wait for a moment 
+            time.sleep(0.3)            
+
+
+
+
+            
+            print("Implementation to be completed")
 
     print(Exp_Upstream_gen)
     print(Exp_Upstream_speed)
