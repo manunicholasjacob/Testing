@@ -182,7 +182,7 @@ if __name__ == "__main__":
     inputnum_loops = int(input("Number of Loops: "))  # Number of loops
     num_loops = 2*inputnum_loops+1
     kill=input("Do you want to kill on error? (y/n) :")
-    slotchoice = input("Do you want to check all slots? (y/n) :")
+    slotchoice = input("Do you want to test all slots (y/n): ")
     
     for i in range(len(listbdf)):
         
@@ -202,7 +202,8 @@ if __name__ == "__main__":
 
     
 
-    if slotchoice == "y":
+    if slotchoice =="y":
+        
         for i in range(num_loops):
         
             for j in range(len(listbdf)):
@@ -232,7 +233,6 @@ if __name__ == "__main__":
                 else:
                     print("width difference")
                     if kill =="y":
-                        print("error")
                         break
                     else:
                         pass
@@ -242,20 +242,18 @@ if __name__ == "__main__":
                 else:
                     print("speed difference")
                     if kill =="y":
-                        print("error")
                         break
                     else:
                         pass
                     
             else:
-                break
+                pass
                 
                     # Wait for a moment 
             time.sleep(0.3)
     else:
-        chooseslots = input("which slots do you want to test: ")
-        print("Implementation in progress")
-        pass
+        chooseslots = input("enter slots you want to test: ")
+        print("Implementation to be completed")
 
     print(Exp_Upstream_gen)
     print(Exp_Upstream_speed)
