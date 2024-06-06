@@ -131,6 +131,9 @@ def set_bridge_control(bus, value, password):
         print(f"Set Bridge Control for {bus} to {value}")
     except subprocess.CalledProcessError:
         print(f"Error setting Bridge Control for {bus}.")
+        
+        
+
 
 def format_bdf(bus):
     # Extract bus number
@@ -175,13 +178,14 @@ if __name__ == "__main__":
     Exp_Downstream_gen = []
     Exp_Downstream_speed = []
 
-
+    num_loops = int(input("Number of Loops: "))  # Number of loops
+    
     for i in range(len(listbdf)):
         
         specific_bus_bridge = listbdf[i] # Bridge control bus address
         specific_bus_link = listbdfdown[i]   # Link status bus address
         desired_values = ["0003", "0043"]  # Alternating values
-        num_loops = 25  # Number of loops
+
 
         max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
         max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
@@ -191,7 +195,7 @@ if __name__ == "__main__":
         Exp_Downstream_gen.append(max_width18)
         Exp_Downstream_speed.append(max_speed18)
 
-    num_loops = 25  # Number of loops
+    
 
     for i in range(num_loops):
     
@@ -199,7 +203,7 @@ if __name__ == "__main__":
 
             specific_bus_bridge = listbdf[j] # Bridge control bus address
             specific_bus_link = listbdfdown[j]   # Link status bus address
-            desired_values = ["0003", "0043"]  # Alternating values   
+            desired_values = [read_bridge_control(listbdf[j]), "0043"]  # Alternating values   
 
             desired_value = desired_values[i % len(desired_values)]
             current_bridge_control = read_bridge_control(specific_bus_bridge)
@@ -211,18 +215,18 @@ if __name__ == "__main__":
             max_width17, max_speed17 = extract_link_capabilities(read_link_capabilities17(specific_bus_bridge))
             max_width18, max_speed18 = extract_link_capabilities(read_link_capabilities18(specific_bus_link))
 
-            if max_width18 == Exp_Upstream_gen[j] or Exp_Downstream_gen[j]:
+            
+            
+            set_bridge_control(specific_bus_bridge, desired_value, user_password)
+            if max_width18 == Exp_Upstream_gen[i] or Exp_Downstream_gen[i]:
                 pass
             else:
                 print("width difference")
 
-            if max_speed18 == Exp_Upstream_speed[j] or Exp_Downstream_speed[j]:
+            if max_speed18 == Exp_Upstream_speed[i] or Exp_Downstream_speed:
                 pass
             else:
                 print("speed difference")
-            
-            set_bridge_control(specific_bus_bridge, desired_value, user_password)
-
                 # Wait for a moment (optional)
         time.sleep(0.3)
             
