@@ -214,15 +214,15 @@ if __name__ == "__main__":
             
             
             set_bridge_control(specific_bus_bridge, desired_value, user_password)
-        if max_width18 == Exp_Upstream_gen[i] or Exp_Downstream_gen[i]:
-            pass
-        else:
-            print("width difference")
+            if max_width18 == Exp_Upstream_gen[i] or Exp_Downstream_gen[i]:
+                pass
+            else:
+                print("width difference")
 
-        if max_speed18 == Exp_Upstream_speed[i] or Exp_Downstream_speed:
-            pass
-        else:
-            print("speed difference")
+            if max_speed18 == Exp_Upstream_speed[i] or Exp_Downstream_speed:
+                pass
+            else:
+                print("speed difference")
                 # Wait for a moment (optional)
         time.sleep(0.3)
             
