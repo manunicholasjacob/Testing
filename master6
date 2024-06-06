@@ -181,6 +181,7 @@ if __name__ == "__main__":
 
     inputnum_loops = int(input("Number of Loops: "))  # Number of loops
     num_loops = 2*inputnum_loops+1
+    kill=input("Do you want to kill on error? (y/n) :")
     
     for i in range(len(listbdf)):
         
@@ -228,11 +229,19 @@ if __name__ == "__main__":
                 pass
             else:
                 print("width difference")
+                if kill =="y":
+                    break
+                else:
+                    pass
 
             if max_speed18 == Exp_Upstream_speed[j] or Exp_Downstream_speed[j]:
                 pass
             else:
                 print("speed difference")
+                if kill =="y":
+                    break
+                else:
+                    pass
                 
         else:
             pass
