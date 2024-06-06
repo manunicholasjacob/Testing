@@ -206,7 +206,7 @@ if __name__ == "__main__":
 
             specific_bus_bridge = listbdf[j] # Bridge control bus address
             specific_bus_link = listbdfdown[j]   # Link status bus address
-            desired_values = [read_bridge_control(bridge_control_values[j]), "0043"]  # Alternating values   
+            desired_values = [bridge_control_values[j], "0043"]  # Alternating values   
 
             desired_value = desired_values[i % len(desired_values)]
             current_bridge_control = read_bridge_control(specific_bus_bridge)
