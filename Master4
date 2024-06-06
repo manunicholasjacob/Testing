@@ -177,6 +177,7 @@ if __name__ == "__main__":
     Exp_Upstream_speed = []
     Exp_Downstream_gen = []
     Exp_Downstream_speed = []
+    bridge_control_values = []
 
     inputnum_loops = int(input("Number of Loops: "))  # Number of loops
     num_loops = 2*inputnum_loops
@@ -194,6 +195,8 @@ if __name__ == "__main__":
         Exp_Upstream_speed.append(max_speed17)
         Exp_Downstream_gen.append(max_width18)
         Exp_Downstream_speed.append(max_speed18)
+        bridge_control_values.append(read_bridge_control(listbdf[i]))
+        
 
     
 
@@ -203,7 +206,7 @@ if __name__ == "__main__":
 
             specific_bus_bridge = listbdf[j] # Bridge control bus address
             specific_bus_link = listbdfdown[j]   # Link status bus address
-            desired_values = [read_bridge_control(listbdf[j]), "0043"]  # Alternating values   
+            desired_values = [read_bridge_control(bridge_control_values[j]), "0043"]  # Alternating values   
 
             desired_value = desired_values[i % len(desired_values)]
             current_bridge_control = read_bridge_control(specific_bus_bridge)
