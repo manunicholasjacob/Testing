@@ -327,7 +327,7 @@ if __name__ == "__main__":
 
 
             
-            print("Implementation to be completed")
+            #print("Implementation to be completed")
 
     print(Exp_Upstream_gen)
     print(Exp_Upstream_speed)
