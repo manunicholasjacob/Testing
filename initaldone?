@@ -41,6 +41,8 @@ command_output = execute_shell_command("lspci | cut -d ' ' -f 1")
 split_numbers = command_output.split('\n')
 split_numbers = [num for num in split_numbers if num]
 
+slotnumbers = []
+
 # Print the resulting list
 #print(split_numbers)
 listbdf = []
@@ -61,6 +63,7 @@ for i in range(len(split_numbers)):
             print(read_slot_capabilities(split_numbers[i]))
             print(f"Slot number: {d}")
             listbdf.append(split_numbers[i])
+            slotnumbers.append(d)
         else:
             pass
     else:
@@ -252,7 +255,11 @@ if __name__ == "__main__":
                     # Wait for a moment 
             time.sleep(0.3)
     else:
-        chooseslots = input("enter slots you want to test: ")
+        print("choose slotnumbers among following",slotnumbers)
+        choose_slot = input("enter slots you want to test: ")
+        index_choice = slotnumbers.index(choose_slot)
+        print(listbdf[index_choice])
+        
         print("Implementation to be completed")
 
     print(Exp_Upstream_gen)
