@@ -246,15 +246,14 @@ if __name__ == "__main__":
                         pass
                     
             else:
-                pass
+                break
                 
                     # Wait for a moment 
             time.sleep(0.3)
     else:
+        chooseslots = input("which slots do you want to test: ")
+        print("Implementation in progress")
         pass
-            
-        
-
 
     print(Exp_Upstream_gen)
     print(Exp_Upstream_speed)
